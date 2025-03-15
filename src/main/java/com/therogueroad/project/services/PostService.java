@@ -1,0 +1,19 @@
+package com.therogueroad.project.services;
+
+import com.therogueroad.project.dto.PostDTO;
+
+
+import java.util.List;
+
+public interface PostService {
+
+    PostDTO createPost(PostDTO postDTO);
+
+    List<PostDTO> getAllPost();
+
+    List<PostDTO> getPostsByUserId(Long userId);
+
+    void deletePost(Long postId);
+
+    PostDTO updatePost(PostDTO postDTO, Long postId);
+}

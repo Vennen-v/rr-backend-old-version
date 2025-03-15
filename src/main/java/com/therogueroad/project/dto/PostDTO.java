@@ -1,61 +1,23 @@
-package com.therogueroad.project.models;
+package com.therogueroad.project.dto;
 
-import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 
-@Entity
-@Table(name = "posts")
-public class Post {
+public class PostDTO {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long postId;
-
     private String title;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private User user;
-
-    private String userName;
-
-    private String displayName;
-
-    private String profilePic;
-
     private String content;
-
-    @OneToMany(mappedBy = "post")
-    private List<Like> likes;
-
-    @OneToMany(mappedBy = "post")
-    private List<Comment> comments;
-
-    private Long saves;
-
+    private String userName;
+    private String displayName;
+    private String profilePic;
+    private List<LikeDTO> likes = new ArrayList<>();
+    private List<CommentDTO> comments = new ArrayList<>();
+    private Long saves = null;
     private LocalDateTime createdAt;
-
-    public Post(Long postId, String title, String content, List<Like> likes, List<Comment> comments, Long saves, LocalDateTime createdAt) {
-        this.postId = postId;
-        this.title = title;
-        this.content = content;
-        this.likes = likes;
-        this.comments = comments;
-        this.saves = saves;
-        this.createdAt = createdAt;
-    }
-
-    public Post() {
-    }
 
     public Long getPostId() {
         return postId;
@@ -73,20 +35,12 @@ public class Post {
         this.title = title;
     }
 
-    public User getUser() {
-        return user;
+    public String getContent() {
+        return content;
     }
 
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setContent(String content) {
+        this.content = content;
     }
 
     public String getDisplayName() {
@@ -97,6 +51,14 @@ public class Post {
         this.displayName = displayName;
     }
 
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
     public String getProfilePic() {
         return profilePic;
     }
@@ -105,27 +67,19 @@ public class Post {
         this.profilePic = profilePic;
     }
 
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public List<Like> getLikes() {
+    public List<LikeDTO> getLikes() {
         return likes;
     }
 
-    public void setLikes(List<Like> likes) {
+    public void setLikes(List<LikeDTO> likes) {
         this.likes = likes;
     }
 
-    public List<Comment> getComments() {
+    public List<CommentDTO> getComments() {
         return comments;
     }
 
-    public void setComments(List<Comment> comments) {
+    public void setComments(List<CommentDTO> comments) {
         this.comments = comments;
     }
 
@@ -145,9 +99,22 @@ public class Post {
         this.createdAt = createdAt;
     }
 
+    public PostDTO(Long postId, String title, String content, List<LikeDTO> likes, List<CommentDTO> comments, Long saves, LocalDateTime createdAt) {
+        this.postId = postId;
+        this.title = title;
+        this.content = content;
+        this.likes = likes;
+        this.comments = comments;
+        this.saves = saves;
+        this.createdAt = createdAt;
+    }
+
+    public PostDTO() {
+    }
+
     @Override
     public String toString() {
-        return "Post{" +
+        return "PostDTO{" +
                 "postId=" + postId +
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
@@ -162,8 +129,8 @@ public class Post {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Post post = (Post) o;
-        return Objects.equals(postId, post.postId);
+        PostDTO postDTO = (PostDTO) o;
+        return Objects.equals(postId, postDTO.postId);
     }
 
     @Override
