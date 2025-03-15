@@ -92,6 +92,19 @@ public class PostServiceImpl implements PostService{
 
     }
 
+    @Override
+    public PostDTO getPost(Long postId) {
+        Post post = postRepository.findById(postId).orElseThrow(()-> new RuntimeException("Post Not Found"));
+        return modelMapper.map(post, PostDTO.class);
+
+    }
+
+    @Override
+    public PostDTO findByKeyword(String keyword) {
+        Post post = postRepository.findByTitleContainingIgnoreCase(keyword);
+        return modelMapper.map(post, PostDTO.class);
+    }
+
     // Create Get Current Users Post
 
 

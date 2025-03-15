@@ -27,12 +27,20 @@ public class PostController {
         return new ResponseEntity<>(postService.getAllPost(), HttpStatus.FOUND);
     }
 
-    @GetMapping("/posts/{userId}")
+    @GetMapping("/posts/{postId}")
+    public ResponseEntity<PostDTO> getPost(@PathVariable Long postId){
+        return new ResponseEntity<>(postService.getPost(postId), HttpStatus.FOUND);
+    }
+
+    @GetMapping("/posts/user/{userId}")
     public ResponseEntity<List<PostDTO>> getPostsByUserId(@PathVariable Long userId){
         return new ResponseEntity<>(postService.getPostsByUserId(userId), HttpStatus.FOUND);
     }
 
-    // Search for post by search keyword
+    @GetMapping("/posts/search")
+    public ResponseEntity<PostDTO> getPostBySearch(@RequestParam(name = "keyword") String keyword){
+        return new ResponseEntity<>(postService.findByKeyword(keyword), HttpStatus.FOUND);
+    }
 
     @DeleteMapping("/posts/{postId}")
     public ResponseEntity<String> deletePost(@PathVariable Long postId){
